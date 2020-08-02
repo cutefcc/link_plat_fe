@@ -1,0 +1,35 @@
+.mockUve {
+    width: calc(100% - 225px);
+    height: 100%;
+    flex-grow: 1;
+    background-color: #Fff;
+    padding: 10px;
+    .mockUveItem {
+        margin-bottom: 10px;
+        .mockUveItemSelect {
+            width: 200px;
+            margin-right: 10px;
+        }
+    }
+    .jsonEdit {
+        display: flex;
+        width: 100%;
+        .jsonShow {
+            width: 50%;
+            border: 1px solid #ccc;
+            .json-pretty {
+                // color: #FC1D26;
+                overflow: auto;
+            }
+            .json-number {
+                color: #FD8C25;
+            }
+            .json-key {
+                color: #FC1D26;
+            }
+            .json-string {
+                color: #40943B;
+            }
+        }
+    }
+}
