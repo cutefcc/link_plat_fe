@@ -1,26 +1,27 @@
-import types from '../constants/index.js';
-import fetch from 'cross-fetch';
+import types from "../constants/index.js";
+import fetch from "cross-fetch";
 
 export function changeName() {
-  return { type: types.CHANGE_NAME }
+  return { type: types.CHANGE_NAME };
 }
 export function changeAge() {
-  return { type: types.CHANGE_AGE }
+  return { type: types.CHANGE_AGE };
 }
 export function changeComputerSize() {
-  return { type: types.CHANGE_COMPUTER_SIZE }
+  return { type: types.CHANGE_COMPUTER_SIZE };
 }
 export function changeAsyncData() {
+  // eslint-disable-next-line no-unused-vars
   return (dispatch, getState) => {
-    fetch('/api/test')
+    fetch("/api/test")
       .then((resp) => {
-        return resp.json()
+        return resp.json();
       })
       .then((resp) => {
         dispatch({ type: types.CHANGE_ASYNCDATA, resp: resp });
       });
-  }
+  };
 }
 export function changeCheckedNav(key) {
-  return { type: types.CHANGE_CHECKEDNAV, key}
+  return { type: types.CHANGE_CHECKEDNAV, key };
 }

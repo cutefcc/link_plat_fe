@@ -1,10 +1,10 @@
 function myLogMiddleware() {
-    return ({ dispatch, getState }) => next => action => {
-        console.log('will dispatch', action);
-        let returnValue = next(action);
-        console.log('state after dispatch', getState());
-        return returnValue;
-    };
+  return ({ dispatch, getState }) => (next) => (action) => {
+    console.log("will dispatch", action, dispatch);
+    let returnValue = next(action);
+    console.log("state after dispatch", getState());
+    return returnValue;
+  };
 }
 
 export default myLogMiddleware();

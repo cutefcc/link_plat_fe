@@ -6,7 +6,13 @@
   "scripts": {
     "dev": "ts-node-dev --respawn ./app.ts",
     "client:dev": "webpack --mode development",
-    "client:prod": "webpack --mode production"
+    "client:prod": "webpack --mode production",
+    "lint": "eslint ./src/webapp"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && npm run lint"
+    }
   },
   "keywords": [],
   "author": "",
@@ -45,12 +51,15 @@
     "@babel/preset-typescript": "^7.6.0",
     "acorn": "^7.1.0",
     "acorn-walk": "^7.0.0",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-import": "^1.12.1",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.3",
     "css-loader": "^3.2.0",
     "escodegen": "^1.12.0",
+    "eslint": "^7.6.0",
+    "eslint-plugin-react": "^7.20.5",
     "esprima": "^4.0.1",
     "estraverse": "^4.3.0",
     "file-loader": "^6.0.0",
@@ -61,12 +70,15 @@
     "gulp-watch": "^5.0.1",
     "happypack": "^5.0.1",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^4.2.5",
     "inversify": "^5.0.1",
     "inversify-binding-decorators": "^4.0.0",
     "inversify-koa-utils": "^1.0.0",
     "koa-router": "^7.4.0",
     "less-loader": "^6.2.0",
     "node-fetch": "^2.6.0",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
     "reflect-metadata": "^0.1.13",
     "rollup-plugin-replace": "^2.2.0",
     "scripty": "^1.9.1",
