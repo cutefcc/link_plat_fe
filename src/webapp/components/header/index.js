@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { Layout } from "antd";
 import { connect } from "react-redux";
 import autobind from "autobind-decorator";
-import { EnvironmentOutlined } from "@ant-design/icons";
 // import * as actions from "../../store/actions";
 import * as R from "ramda";
 import "./index.less";
@@ -29,13 +28,6 @@ class TopHeader extends React.Component {
           <img className="logoImg" src="./static/img/weibo_logo.png" />
           <div className="logoText">流量引擎联调平台</div>
         </div>
-        <div className="checkedNav">
-          <EnvironmentOutlined />
-          <span>{` ${checkedNavObj.text}`}</span>
-        </div>
-        {checkedNav === "mockUve" && (
-          <div className="tip">mock 10.79.40.125:8667 返回</div>
-        )}
       </Header>
     );
   }

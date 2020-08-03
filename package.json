@@ -19,7 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
-    "antd": "^3.23.2",
+    "antd": "^4.5.2",
     "autobind-decorator": "^2.4.0",
     "cross-env": "^5.2.1",
     "cross-fetch": "^3.0.4",

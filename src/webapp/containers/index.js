@@ -10,6 +10,9 @@ import NewEnv from "../components/Content/NewEnv";
 import SendReport from "../components/Content/SendReport";
 import CountPage from "../components/Content/CountPage";
 import MockUve from "../components/Content/MockUve";
+import MockSfst from "../components/Content/MockSfst";
+import SearchMid from "../components/Content/SearchMid";
+import DebugTool from "../components/Content/DebugTool";
 import LeftNav from "../components/leftNav/index";
 import "./index.less";
 import { Layout } from "antd";
@@ -34,12 +37,16 @@ class App extends React.Component {
           <TopHeader />
           <div className="mainContainer">
             <LeftNav />
+            <Route path="/" exact component={AlreadyEnv} />
             <Route path="/alreadyEnv" component={AlreadyEnv} />
             <Route path="/smartBuild" component={SmartBuild} />
             <Route path="/newEnv" component={NewEnv} />
             <Route path="/sendReport" component={SendReport} />
             <Route path="/countPage" component={CountPage} />
             <Route path="/mockUve" component={MockUve} />
+            <Route path="/mockSfst" component={MockSfst} />
+            <Route path="/searchMid" component={SearchMid} />
+            <Route path="/debugTool" component={DebugTool} />
           </div>
         </Layout>
         {/* </Switch> */}
