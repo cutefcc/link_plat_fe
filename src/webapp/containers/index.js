@@ -43,7 +43,7 @@ class App extends React.Component {
         console.log("app组件内可以访问到 redux 里面的 store", this.props);
         return (
             <BrowserRouter>
-                <Switch>
+                {/* <Switch> */}
                     <Layout className="layout">
                         <TopHeader />
                         <div className="mainContainer">
@@ -56,7 +56,7 @@ class App extends React.Component {
                             <Route path="/mockUve" component={MockUve} />
                         </div>
                     </Layout>
-                </Switch>
+                {/* </Switch> */}
             </BrowserRouter>
         );
     }
