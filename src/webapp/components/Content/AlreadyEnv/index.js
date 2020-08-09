@@ -256,8 +256,8 @@ class AlreadyEnv extends React.Component {
                 // }
                 this.setState({
                   activeTabKey: key,
-                  page: 1,
-                  size: 10,
+                  // page: 1,
+                  // size: 10,
                 });
               } else {
                 this.handlePageChange(1, 20);
