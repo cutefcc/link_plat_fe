@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 // import * as R from 'ramda'
 import autobind from "autobind-decorator";
-import { Select, Input, Button } from "antd";
+import { Select, Input, Button, message } from "antd";
 const { TextArea } = Input;
 const { Option } = Select;
 import { services, styles } from "../../../constants/mockUve";
@@ -16,37 +16,42 @@ class MockUve extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      json: {
-        // name: "An ice sculpture",
-        // price: 12.5,
-        // tags: ["cold", "ice"],
-        // dimensions: {
-        //   length: 7.0,
-        //   width: 12.0,
-        //   height: 9.5,
-        // },
-        // warehouseLocation: {
-        //   latitude: -78.75,
-        //   longitude: 20.4,
-        // },
-      },
+      jsonStr: "", // TextArea 内容
+      json: "",
     };
+  }
+
+  handleShowMessage(type, info) {
+    message.destroy();
+    message[type](info);
   }
 
   handleChange() {}
 
   handleJsonChange(e) {
-    console.log(e.target.value);
-    try {
-      let json = JSON.parse(e.target.value);
-      if (json) {
-        this.setState({
-          json: JSON.parse(e.target.value),
-        });
-      }
-    } catch (err) {
-      console.log(err);
+    const textAreaText = e.target.value;
+    if (textAreaText === "") {
+      this.setState({
+        jsonStr: "",
+        json: "",
+      });
+      return;
     }
+    this.setState({
+      jsonStr: textAreaText,
+    });
+    // try parse json str to json
+    let json = null;
+    try {
+      json = JSON.parse(textAreaText);
+      this.handleShowMessage("success", "JSON字符串 数据合法");
+    } catch {
+      json = {};
+      this.handleShowMessage("error", "JSON字符串 格式不合法");
+    }
+    this.setState({
+      json,
+    });
   }
 
   renderServicesOptions() {
@@ -64,6 +69,7 @@ class MockUve extends React.Component {
   render() {
     return (
       <div className="mockUve">
+        <h2>mockUVE返回数据</h2>
         <h4 className="subTitle">自动生成mock数据</h4>
         <div className="inputArea">
           <div className="mockUveItem">
@@ -117,13 +123,13 @@ class MockUve extends React.Component {
             style={{ width: "50%", borderBottomLeftRadius: "5px" }}
             allowClear
             onChange={this.handleJsonChange}
-            value={JSON.stringify(this.state.json)}
+            value={this.state.jsonStr}
             className="textAreaDiv"
           ></TextArea>
           <div
             className="jsonShow"
             dangerouslySetInnerHTML={{
-              __html: prettyHtml(this.state.json, this.state.json.dimensions),
+              __html: this.state.json === "" ? "" : prettyHtml(this.state.json),
             }}
           ></div>
         </div>

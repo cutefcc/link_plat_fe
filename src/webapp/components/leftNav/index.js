@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
-// import * as R from "ramda";
+import * as R from "ramda";
 import autobind from "autobind-decorator";
 // import { AlignLeftOutlined } from "@ant-design/icons";
 import { Menu, Button } from "antd";
@@ -24,9 +24,7 @@ import "./index.less";
 class LeftNav extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      collapsed: false,
-    };
+    this.state = {};
   }
   handleItemClick(item) {
     this.props.changeCheckedNav(item.key);
@@ -36,12 +34,11 @@ class LeftNav extends React.Component {
   }
 
   toggleCollapsed() {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
+    this.props.changeLeftNavStatus(!this.props.leftNavStatus);
   }
 
   render() {
+    const leftNavStatus = R.pathOr("", ["props", "leftNavStatus"], this);
     return (
       <>
         <Button
@@ -50,12 +47,12 @@ class LeftNav extends React.Component {
           style={{
             marginBottom: 16,
             position: "absolute",
-            left: "18px",
-            bottom: "0",
+            left: !leftNavStatus ? "180px" : "80px",
+            top: "5px",
           }}
         >
           {React.createElement(
-            this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined
+            this.props.leftNavStatus ? MenuUnfoldOutlined : MenuFoldOutlined
           )}
         </Button>
         <Menu
@@ -63,17 +60,17 @@ class LeftNav extends React.Component {
           defaultOpenKeys={["sub1"]}
           mode="inline"
           theme="dark"
-          inlineCollapsed={this.state.collapsed}
+          inlineCollapsed={this.props.leftNavStatus}
           className="menuUl"
         >
-          <SubMenu key="sub1" icon={<PieChartOutlined />} title="联调环境">
+          <SubMenu key="sub1" icon={<PieChartOutlined />} title="联调环境管理">
             <Menu.Item
               key="5"
               onClick={() => {
                 this.props.history.push("/alreadyEnv");
               }}
             >
-              已有环境
+              已有环境列表
             </Menu.Item>
             <Menu.Item
               key="6"
@@ -105,7 +102,7 @@ class LeftNav extends React.Component {
                 this.props.history.push("/mockUve");
               }}
             >
-              mockUVE返回数据
+              <span title="mockUVE返回数据">mockUVE返回数据</span>
             </Menu.Item>
             <Menu.Item
               key="10"
@@ -141,7 +138,7 @@ class LeftNav extends React.Component {
             }}
             icon={<ContainerOutlined />}
           >
-            统计页面
+            统计页面展示
           </Menu.Item>
         </Menu>
       </>
@@ -158,6 +155,10 @@ let mapDispatchToProps = (dispatch) => {
   return {
     changeCheckedNav: (key) => {
       dispatch(actions.changeCheckedNav(key));
+    },
+    // change left nav status
+    changeLeftNavStatus: (payload) => {
+      dispatch(actions.changeLeftNavStatus(payload));
     },
   };
 };

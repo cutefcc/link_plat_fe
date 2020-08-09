@@ -25,3 +25,6 @@ export function changeAsyncData() {
 export function changeCheckedNav(key) {
   return { type: types.CHANGE_CHECKEDNAV, key };
 }
+export function changeLeftNavStatus(status) {
+  return { type: types.CHANGE_LEFTNAVSTATUS, payload: status };
+}

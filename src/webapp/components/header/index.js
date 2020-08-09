@@ -17,16 +17,16 @@ class TopHeader extends React.Component {
     this.props.history.push("/");
   }
   render() {
-    const checkedNav = R.pathOr("", ["props", "checkedNav"], this);
-    const checkedNavObj = R.pathOr({}, ["props", "leftNav"], this).find(
-      (item) => item.key === checkedNav
-    );
-    console.log("checkedNavObj", checkedNavObj);
+    // const checkedNav = R.pathOr("", ["props", "checkedNav"], this);
+    const leftNavStatus = R.pathOr("", ["props", "leftNavStatus"], this);
+    // const checkedNavObj = R.pathOr({}, ["props", "leftNav"], this).find(
+    //   (item) => item.key === checkedNav
+    // );
     return (
       <Header className="topHeader">
         <div className="logo" onClick={this.handleLogoClick}>
           <img className="logoImg" src="./static/img/weibo_logo.png" />
-          <div className="logoText">流量引擎联调平台</div>
+          {!leftNavStatus && <div className="logoText">流量引擎联调平台</div>}
         </div>
       </Header>
     );
