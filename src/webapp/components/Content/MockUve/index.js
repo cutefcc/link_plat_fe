@@ -3,10 +3,12 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 // import * as R from 'ramda'
 import autobind from "autobind-decorator";
-import { Select, Input, Button, message } from "antd";
+import { Select, Input, Button, message, Breadcrumb } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
 const { TextArea } = Input;
 const { Option } = Select;
 import { services, styles } from "../../../constants/mockUve";
+import RightConSubTitle from "../../RightConSubTitle";
 import prettyHtml from "json-pretty-html";
 import "./index.less";
 
@@ -68,9 +70,19 @@ class MockUve extends React.Component {
 
   render() {
     return (
-      <div className="mockUve">
-        <h2>mockUVE返回数据</h2>
-        <h4 className="subTitle">自动生成mock数据</h4>
+      <div className="rightCon mockUve">
+        <Breadcrumb
+          separator=""
+          style={{ marginBottom: "10px", fontSize: "12px" }}
+        >
+          <Breadcrumb.Item href="">
+            <HomeOutlined />
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>mockUVE返回数据</Breadcrumb.Item>
+        </Breadcrumb>
+        {/* <h4 className="subTitle">自动生成mock数据</h4> */}
+        <RightConSubTitle text="自动生成mock数据" />
         <div className="inputArea">
           <div className="mockUveItem">
             <span className="inputText">选择场景</span>
@@ -116,7 +128,8 @@ class MockUve extends React.Component {
             </Button>
           </div>
         </div>
-        <h4 className="subTitle">手动生成mock数据</h4>
+        {/* <h4 className="subTitle">手动生成mock数据</h4> */}
+        <RightConSubTitle text="手动生成mock数据" />
 
         <div className="jsonEdit">
           <TextArea
