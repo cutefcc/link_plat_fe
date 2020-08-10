@@ -185,32 +185,25 @@ class AlreadyEnv extends React.Component {
     });
   }
 
-  render() {
-    const {
-      envLists,
-      expiredLists,
-      showEnvLists,
-      showExpiredLists,
-      envListsLoading,
-      expiredListsLoading,
-      activeTabKey,
-      page,
-      search,
-      searchValue,
-    } = this.state;
-    console.log("!(search === activeTabKey)", !(search === activeTabKey));
+  renderBreadcrumb() {
     return (
-      <div className="rightCon alreadyEnv">
-        <Breadcrumb
-          separator=""
-          style={{ marginBottom: "10px", fontSize: "12px" }}
-        >
-          <Breadcrumb.Item href="">
-            <HomeOutlined />
-          </Breadcrumb.Item>
-          <Breadcrumb.Separator />
-          <Breadcrumb.Item>已有环境列表</Breadcrumb.Item>
-        </Breadcrumb>
+      <Breadcrumb
+        separator=""
+        style={{ marginBottom: "10px", fontSize: "12px" }}
+      >
+        <Breadcrumb.Item href="">
+          <HomeOutlined />
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item>已有环境列表</Breadcrumb.Item>
+      </Breadcrumb>
+    );
+  }
+
+  renderTopSearch() {
+    const { searchValue } = this.state;
+    return (
+      <>
         <RightConSubTitle text="按环境名称搜索" />
         <div className="inputArea">
           <div className="inputAreaItem">
@@ -238,12 +231,29 @@ class AlreadyEnv extends React.Component {
             )}
           </div>
         </div>
+      </>
+    );
+  }
+
+  renderTables() {
+    const {
+      envLists,
+      expiredLists,
+      showEnvLists,
+      showExpiredLists,
+      envListsLoading,
+      expiredListsLoading,
+      activeTabKey,
+      page,
+      search,
+    } = this.state;
+    return (
+      <>
         <RightConSubTitle text="环境列表展示" />
         <div className="talbeArea">
           <Tabs
             defaultActiveKey="1"
             onChange={(key) => {
-              console.log("search", search);
               if (search === "1" || search === "2") {
                 // 搜索状态，且是 进行中
                 // if (key === '1' && key === activeTabKey) {
@@ -441,6 +451,16 @@ class AlreadyEnv extends React.Component {
             )}
           </div>
         </div>
+      </>
+    );
+  }
+
+  render() {
+    return (
+      <div className="rightCon alreadyEnv">
+        {this.renderBreadcrumb()}
+        {this.renderTopSearch()}
+        {this.renderTables()}
       </div>
     );
   }

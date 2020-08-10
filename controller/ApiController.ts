@@ -3,12 +3,16 @@ import {
   inject,
   interfaces,
   httpGet,
+  httpPost,
   TYPE,
   controller,
   TAGS,
   provideThrowable,
 } from "../ioc";
 import { host, port } from "../constant/config";
+import * as queryString from "query-string";
+const urlPrefix = `${host}:${port}/`;
+
 @provideThrowable(TYPE.Controller, "ApiController")
 @controller("/api")
 export default class ApiController implements interfaces.Controller {
@@ -34,17 +38,87 @@ export default class ApiController implements interfaces.Controller {
     ctx: Router.IRouterContext,
     next: () => Promise<any>
   ): Promise<any> {
-    const url = `${host}:${port}/expired_envs`;
-    const result: Promise<Object> = await this.apiService.getInfo(url);
-    ctx.body = result;
+    const url: string = `${urlPrefix}expired_envs`;
+    let res: object = {};
+    try {
+      const result: Promise<Object> = await this.apiService.getInfo(url);
+      res = result;
+    } catch {
+      res = {
+        code: 0,
+        message: "接口返回错误",
+      };
+    }
+    ctx.body = res;
   }
   @httpGet("/getEnvsLists")
   private async getEnvsLists(
     ctx: Router.IRouterContext,
     next: () => Promise<any>
   ): Promise<any> {
-    const url = `${host}:${port}/env_lists`;
-    const result: Promise<Object> = await this.apiService.getInfo(url);
-    ctx.body = result;
+    const url: string = `${urlPrefix}env_lists`;
+    let res: object = {};
+    try {
+      const result: Promise<Object> = await this.apiService.getInfo(url);
+      res = result;
+    } catch {
+      res = {
+        code: 0,
+        message: "接口返回错误",
+      };
+    }
+    ctx.body = res;
   }
+  @httpPost("/autoGenerate")
+  private async autoGenerate(
+    ctx: Router.IRouterContext,
+    next: () => Promise<any>
+  ): Promise<any> {
+    let query = ctx.request.body;
+    Object.keys(query).forEach((item) => {
+      if (query[item] === "") {
+        delete query[item];
+      }
+    });
+    const url: string = `${urlPrefix}sget_uvemock?${queryString.stringify(
+      query
+    )}`;
+    let res: object = {};
+    try {
+      const result: Promise<any> = await this.apiService.getInfo(url);
+      res = result;
+    } catch {
+      res = {
+        code: 0,
+        message: "接口返回错误",
+      };
+    }
+    ctx.body = res;
+  }
+  //   @httpPost("/uploadMock")
+  //   private async uploadMock(
+  //     ctx: Router.IRouterContext,
+  //     next: () => Promise<any>
+  //   ): Promise<any> {
+  //     let query = ctx.request.body;
+  //     Object.keys(query).forEach(item => {
+  //         if (query[item] === '') {
+  //             delete query[item]
+  //         }
+  //     })
+  //     const url = `${urlPrefix}upload_mock?${queryString.stringify(query)}`;
+  //     let res = {
+
+  //     }
+  //     try {
+  //         const result: Promise<any> = await this.apiService.getInfo(url);
+  //         res = result;
+  //     } catch {
+  //         res = {
+  //             code: 0,
+  //             message: "接口返回错误"
+  //         };
+  //     }
+  //     ctx.body = res;
+  //   }
 }

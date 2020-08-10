@@ -14,9 +14,6 @@ import historyApiFallback from "koa2-connect-history-api-fallback";
 // 设置中间件
 server
   .setConfig((app) => {
-    console.log("app1", app);
-    //设置中间件
-    app.use(bodyParser());
     //白名单,加白名单的作用是让他走后端路由  这一步一定要在下面  指定静态资源文件  的前面，不然会导致 404
     app.use(
       historyApiFallback({
@@ -33,6 +30,8 @@ server
       })
     );
     app.use(serve("./dist")); //静态资源文件
+    //设置中间件
+    app.use(bodyParser());
     app.context.render = co.wrap(
       render({
         root: "./dist",
@@ -49,5 +48,5 @@ server
   });
 let app = server.build();
 app.listen(3001, () => {
-  console.log("正在监听3001端口，启动了🐭");
+  console.log("正在监听3001端口🚀🚀🚀");
 });
