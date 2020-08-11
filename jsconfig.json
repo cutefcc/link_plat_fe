@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "commonComponents/*": ["src/webapp/components/common"]
+    }
+  }
+}

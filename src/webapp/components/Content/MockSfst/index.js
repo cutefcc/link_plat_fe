@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 // import * as R from 'ramda'
 import autobind from "autobind-decorator";
+import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import "./index.less";
 
 @withRouter
@@ -12,8 +13,10 @@ class MockSfst extends React.Component {
     super(props);
   }
 
+  renderBreadcrumb = () => <RightConBreadcrumb text="查询MockSfst返回数据" />;
+
   render() {
-    return <div className="mockSfst">MockSfst</div>;
+    return <div className="rightCon mockSfst">{this.renderBreadcrumb()}</div>;
   }
 }
 

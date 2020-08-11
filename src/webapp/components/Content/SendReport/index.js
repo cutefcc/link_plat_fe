@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 // import * as R from 'ramda'
 import autobind from "autobind-decorator";
+import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import "./index.less";
 
 @withRouter
@@ -12,8 +13,10 @@ class SendReport extends React.Component {
     super(props);
   }
 
+  renderBreadcrumb = () => <RightConBreadcrumb text="发送测试报告" />;
+
   render() {
-    return <div className="sendReport">SendReport</div>;
+    return <div className="rightCon sendReport">{this.renderBreadcrumb()}</div>;
   }
 }
 

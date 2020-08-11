@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import * as R from "ramda";
 import fetch from "cross-fetch";
 import autobind from "autobind-decorator";
-import { Select, Input, Button, message, Breadcrumb } from "antd";
-import { HomeOutlined } from "@ant-design/icons";
+import { Select, Input, Button, message } from "antd";
 const { TextArea } = Input;
 const { Option } = Select;
 import { services, styles } from "../../../constants/mockUve";
-import RightConSubTitle from "../../RightConSubTitle";
+import RightConSubTitle from "commonComponents/RightConSubTitle";
+import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import prettyHtml from "json-pretty-html";
 import "./index.less";
 
@@ -125,20 +125,7 @@ class MockUve extends React.Component {
     });
   }
 
-  renderBreadcrumb() {
-    return (
-      <Breadcrumb
-        separator=""
-        style={{ marginBottom: "10px", fontSize: "12px" }}
-      >
-        <Breadcrumb.Item href="">
-          <HomeOutlined />
-        </Breadcrumb.Item>
-        <Breadcrumb.Separator />
-        <Breadcrumb.Item>mockUVE返回数据</Breadcrumb.Item>
-      </Breadcrumb>
-    );
-  }
+  renderBreadcrumb = () => <RightConBreadcrumb text="mockUVE返回数据" />;
 
   renderAutoMock() {
     const { service, style, mid } = this.state;
@@ -147,6 +134,15 @@ class MockUve extends React.Component {
         <RightConSubTitle text="自动生成mock数据" />
         <div className="inputArea">
           <div className="mockUveItem">
+            <span className="inputText">项目名称</span>
+            <Select
+              defaultValue="main_feed"
+              onChange={this.handleServicesChange}
+              className="mockUveItemSelect"
+              value={service}
+            >
+              {this.renderServicesOptions()}
+            </Select>
             <span className="inputText">选择场景</span>
             <Select
               defaultValue="main_feed"
@@ -165,6 +161,8 @@ class MockUve extends React.Component {
             >
               {this.renderStylesOptions()}
             </Select>
+          </div>
+          <div className="mockUveItem">
             <span className="inputText">指定mid</span>
             <Input
               placeholder=""
@@ -172,8 +170,6 @@ class MockUve extends React.Component {
               onChange={this.handleMidChange}
               className="mockUveItemSelect"
             />
-          </div>
-          <div className="mockUveItem">
             <span className="inputText">营销目标</span>
             <Input
               placeholder="指定promotion_objective"

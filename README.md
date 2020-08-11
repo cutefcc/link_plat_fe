@@ -18,3 +18,20 @@
   - `<Link to="/nav1/topics">react渲染长列表</Link>`
 - node 端接收不到前端的 post 请求的 body 数据：
   - 设置 `headers: { 'Content-Type': 'application/json' }`
+- react 使用箭头函数报错:
+  - 参考：`https://babeljs.io/docs/en/babel-plugin-proposal-class-properties`
+  - `npm install --save-dev @babel/plugin-proposal-class-properties`
+  - 这里要注意 ⚠️：在.babelrc 中需要保障@babel/plugin-proposal-decorators 在 @babel/plugin-proposal-class-properties 前面，like this: 不然还会报错
+  ```
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        "@babel/plugin-proposal-class-properties",
+  ```
+  ```
+  If you are using ["@babel/plugin-proposal-decorators", { "legacy": true }], make sure it comes *before* "@babel/plugin-proposal-class-properties" and enable loose mode, like so:
+        ["@babel/plugin-proposal-decorators", { "legacy": true }]
+        ["@babel/plugin-proposal-class-properties", { "loose": true }]
+  ```
+- webpack 配置 alias 别名：有益于项目引用组件时写更加简洁的路径
+- `jsconfig.json` 了解一下？ 可以干嘛？ 和 `tsconfig.json` 是啥关系？
+- vscode 编辑器不能跳转到组件对应的目录？
+- @json-editor/json-editor 只是安装了，还没有实践

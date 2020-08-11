@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 // import * as R from 'ramda'
 import autobind from "autobind-decorator";
+import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import "./index.less";
 
 @withRouter
@@ -12,8 +13,10 @@ class NewEnv extends React.Component {
     super(props);
   }
 
+  renderBreadcrumb = () => <RightConBreadcrumb text="新建联调环境" />;
+
   render() {
-    return <div className="newEnv">NewEnv</div>;
+    return <div className="rightCon newEnv">{this.renderBreadcrumb()}</div>;
   }
 }
 

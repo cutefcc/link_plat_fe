@@ -3,20 +3,12 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import fetch from "cross-fetch";
 // import * as R from 'ramda'
-import RightConSubTitle from "../../RightConSubTitle";
+import RightConSubTitle from "commonComponents/RightConSubTitle";
+import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import autobind from "autobind-decorator";
-import {
-  Table,
-  Space,
-  Input,
-  Tabs,
-  Pagination,
-  Button,
-  Breadcrumb,
-} from "antd";
+import { Table, Space, Input, Tabs, Pagination, Button } from "antd";
 const { Column } = Table;
 const { TabPane } = Tabs;
-import { HomeOutlined } from "@ant-design/icons";
 
 const { Search } = Input;
 import "./index.less";
@@ -185,20 +177,7 @@ class AlreadyEnv extends React.Component {
     });
   }
 
-  renderBreadcrumb() {
-    return (
-      <Breadcrumb
-        separator=""
-        style={{ marginBottom: "10px", fontSize: "12px" }}
-      >
-        <Breadcrumb.Item href="">
-          <HomeOutlined />
-        </Breadcrumb.Item>
-        <Breadcrumb.Separator />
-        <Breadcrumb.Item>已有环境列表</Breadcrumb.Item>
-      </Breadcrumb>
-    );
-  }
+  renderBreadcrumb = () => <RightConBreadcrumb text="已有环境列表" />;
 
   renderTopSearch() {
     const { searchValue } = this.state;

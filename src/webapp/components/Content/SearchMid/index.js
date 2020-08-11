@@ -2,7 +2,11 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 // import * as R from 'ramda'
+import { Input } from "antd";
+import RightConSubTitle from "commonComponents/RightConSubTitle";
+import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import autobind from "autobind-decorator";
+const { Search } = Input;
 import "./index.less";
 
 @withRouter
@@ -10,10 +14,49 @@ import "./index.less";
 class SearchMid extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      searchValue: "",
+    };
+  }
+
+  handleSearch(value) {
+    console.log("go search", value);
+  }
+
+  renderBreadcrumb = () => <RightConBreadcrumb text="查询mid页" />;
+
+  renderInputArea() {
+    return (
+      <>
+        <RightConSubTitle text="按mid搜索" />
+        <div className="inputArea">
+          <div className="inputAreaItem">
+            <Search
+              placeholder="输入mid"
+              onSearch={(value) => {
+                this.handleSearch(value);
+              }}
+              onChange={(e) => {
+                this.setState({
+                  searchValue: e.target.value,
+                });
+              }}
+              style={{ width: 200 }}
+              value={this.state.searchValue}
+            />
+          </div>
+        </div>
+      </>
+    );
   }
 
   render() {
-    return <div className="searchMid">SearchMid</div>;
+    return (
+      <div className="rightCon searchMid">
+        {this.renderBreadcrumb()}
+        {this.renderInputArea()}
+      </div>
+    );
   }
 }
 

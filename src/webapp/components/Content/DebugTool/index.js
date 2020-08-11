@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 // import * as R from 'ramda'
 import autobind from "autobind-decorator";
+import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import "./index.less";
 
 @withRouter
@@ -12,8 +13,10 @@ class DebugTool extends React.Component {
     super(props);
   }
 
+  renderBreadcrumb = () => <RightConBreadcrumb text="工具🔧详情页面" />;
+
   render() {
-    return <div className="debugTool">DebugTool</div>;
+    return <div className="rightCon debugTool">{this.renderBreadcrumb()}</div>;
   }
 }
 

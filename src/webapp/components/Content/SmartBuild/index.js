@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 // import * as R from 'ramda'
 import autobind from "autobind-decorator";
+import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import "./index.less";
 
 @withRouter
@@ -12,8 +13,10 @@ class SmartBuild extends React.Component {
     super(props);
   }
 
+  renderBreadcrumb = () => <RightConBreadcrumb text="智能搭建环境" />;
+
   render() {
-    return <div className="smartBuild">SmartBuild</div>;
+    return <div className="rightCon smartBuild">{this.renderBreadcrumb()}</div>;
   }
 }
 
