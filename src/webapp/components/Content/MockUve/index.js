@@ -5,12 +5,12 @@ import * as R from "ramda";
 import fetch from "cross-fetch";
 import autobind from "autobind-decorator";
 import { Select, Input, Button, message } from "antd";
-const { TextArea } = Input;
 const { Option } = Select;
 import { services, styles } from "../../../constants/mockUve";
 import RightConSubTitle from "commonComponents/RightConSubTitle";
 import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
-import prettyHtml from "json-pretty-html";
+import SearchInput from "commonComponents/SearchInput";
+import JsonShow from "commonComponents/JsonShow";
 import "./index.less";
 
 @withRouter
@@ -135,6 +135,11 @@ class MockUve extends React.Component {
         <div className="inputArea">
           <div className="mockUveItem">
             <span className="inputText">项目名称</span>
+            <SearchInput
+              csName="mockUveItemSelect"
+              placeholder="请填写项目名称"
+            />
+            {/* <span className="inputText">项目名称</span>
             <Select
               defaultValue="main_feed"
               onChange={this.handleServicesChange}
@@ -142,7 +147,7 @@ class MockUve extends React.Component {
               value={service}
             >
               {this.renderServicesOptions()}
-            </Select>
+            </Select> */}
             <span className="inputText">选择场景</span>
             <Select
               defaultValue="main_feed"
@@ -201,33 +206,14 @@ class MockUve extends React.Component {
   }
 
   renderManualMock() {
+    const { jsonStr, json } = this.state;
     return (
-      <>
-        <RightConSubTitle text="手动生成mock数据" />
-        <div className="jsonEdit">
-          <TextArea
-            style={{ width: "50%", borderBottomLeftRadius: "5px" }}
-            allowClear
-            onChange={this.handleJsonChange}
-            value={this.state.jsonStr}
-            className="textAreaDiv"
-          ></TextArea>
-          <div
-            className="jsonShow"
-            dangerouslySetInnerHTML={{
-              __html: this.state.json === "" ? "" : prettyHtml(this.state.json),
-            }}
-          ></div>
-        </div>
-        <div className="bottomBtn">
-          <Button
-            type="primary"
-            style={{ borderRadius: "5px", marginLeft: "20px" }}
-          >
-            提交
-          </Button>
-        </div>
-      </>
+      <JsonShow
+        jsonStr={jsonStr}
+        json={json}
+        onJsonChange={this.handleJsonChange}
+        title="手动生成mock数据"
+      />
     );
   }
 

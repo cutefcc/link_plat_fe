@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions";
+import * as actions from "store/actions";
 import * as R from "ramda";
 import autobind from "autobind-decorator";
 // import { AlignLeftOutlined } from "@ant-design/icons";
@@ -26,11 +26,8 @@ class LeftNav extends React.Component {
     super(props);
     this.state = {};
   }
-  handleItemClick(item) {
-    this.props.changeCheckedNav(item.key);
-    if (item.routePath) {
-      this.props.history.push(item.routePath);
-    }
+  handleItemClick(key) {
+    this.props.changeCheckedNav(key);
   }
 
   toggleCollapsed() {
@@ -39,6 +36,7 @@ class LeftNav extends React.Component {
 
   render() {
     const leftNavStatus = R.pathOr("", ["props", "leftNavStatus"], this);
+    const checkedNav = R.pathOr("5", ["props", "checkedNav"], this);
     return (
       <>
         <Button
@@ -52,15 +50,15 @@ class LeftNav extends React.Component {
           }}
         >
           {React.createElement(
-            this.props.leftNavStatus ? MenuUnfoldOutlined : MenuFoldOutlined
+            leftNavStatus ? MenuUnfoldOutlined : MenuFoldOutlined
           )}
         </Button>
         <Menu
-          defaultSelectedKeys={["1"]}
+          selectedKeys={[checkedNav]}
           defaultOpenKeys={["sub1"]}
           mode="inline"
           theme="dark"
-          inlineCollapsed={this.props.leftNavStatus}
+          inlineCollapsed={leftNavStatus}
           className="menuUl"
         >
           <SubMenu key="sub1" icon={<PieChartOutlined />} title="联调环境管理">
@@ -68,6 +66,7 @@ class LeftNav extends React.Component {
               key="5"
               onClick={() => {
                 this.props.history.push("/alreadyEnv");
+                this.handleItemClick("5");
               }}
             >
               已有环境列表
@@ -76,14 +75,16 @@ class LeftNav extends React.Component {
               key="6"
               onClick={() => {
                 this.props.history.push("/debugTool");
+                this.handleItemClick("6");
               }}
             >
-              debug工具详情页
+              环境详情页
             </Menu.Item>
             <Menu.Item
               key="7"
               onClick={() => {
                 this.props.history.push("/sendReport");
+                this.handleItemClick("7");
               }}
             >
               发送测试报告
@@ -92,6 +93,7 @@ class LeftNav extends React.Component {
               key="8"
               onClick={() => {
                 this.props.history.push("/searchMid");
+                this.handleItemClick("8");
               }}
             >
               查询mid页
@@ -100,6 +102,7 @@ class LeftNav extends React.Component {
               key="9"
               onClick={() => {
                 this.props.history.push("/mockUve");
+                this.handleItemClick("9");
               }}
             >
               <span title="mockUVE返回数据">mockUVE返回数据</span>
@@ -108,6 +111,7 @@ class LeftNav extends React.Component {
               key="10"
               onClick={() => {
                 this.props.history.push("/mockSfst");
+                this.handleItemClick("10");
               }}
             >
               mockSFST返回数据
@@ -117,6 +121,7 @@ class LeftNav extends React.Component {
             key="2"
             onClick={() => {
               this.props.history.push("/smartBuild");
+              this.handleItemClick("2");
             }}
             icon={<DesktopOutlined />}
           >
@@ -126,6 +131,7 @@ class LeftNav extends React.Component {
             key="3"
             onClick={() => {
               this.props.history.push("/newEnv");
+              this.handleItemClick("3");
             }}
             icon={<ContainerOutlined />}
           >
@@ -135,6 +141,7 @@ class LeftNav extends React.Component {
             key="4"
             onClick={() => {
               this.props.history.push("/countPage");
+              this.handleItemClick("4");
             }}
             icon={<ContainerOutlined />}
           >

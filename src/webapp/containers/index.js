@@ -1,19 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
-// import * as Redux from "redux";
 import { BrowserRouter, Route } from "react-router-dom";
+import { leftNavConfig } from "constants/leftNav";
+import * as R from "ramda";
+import * as actions from "store/actions";
+import TopHeader from "components/header";
+import AlreadyEnv from "components/Content/AlreadyEnv";
+import SmartBuild from "components/Content/SmartBuild";
+import NewEnv from "components/Content/NewEnv";
+import SendReport from "components/Content/SendReport";
+import CountPage from "components/Content/CountPage";
+import MockUve from "components/Content/MockUve";
+import MockSfst from "components/Content/MockSfst";
+import SearchMid from "components/Content/SearchMid";
+import DebugTool from "components/Content/DebugTool";
+import LeftNav from "components/leftNav/index";
 
-import TopHeader from "../components/header";
-import AlreadyEnv from "../components/Content/AlreadyEnv";
-import SmartBuild from "../components/Content/SmartBuild";
-import NewEnv from "../components/Content/NewEnv";
-import SendReport from "../components/Content/SendReport";
-import CountPage from "../components/Content/CountPage";
-import MockUve from "../components/Content/MockUve";
-import MockSfst from "../components/Content/MockSfst";
-import SearchMid from "../components/Content/SearchMid";
-import DebugTool from "../components/Content/DebugTool";
-import LeftNav from "../components/leftNav/index";
 import "./index.less";
 import { Layout } from "antd";
 // const { Header, Sider, Content } = Layout;
@@ -23,6 +25,17 @@ class App extends React.Component {
     this.state = {
       collapsed: false,
     };
+  }
+  componentDidMount() {
+    this.handleLeftNavChecked();
+  }
+  handleLeftNavChecked() {
+    const pathName = window.location.pathname;
+    this.props.changeCheckedNav(
+      pathName === "/"
+        ? "5"
+        : R.pathOr("5", [pathName.slice(1), "key"], leftNavConfig)
+    );
   }
   toggle() {
     this.setState({
@@ -65,8 +78,12 @@ let mapStateToProps = (state) => {
 };
 // 建立组件跟store.dispatch的映射关系，在组件里面调用 this.props.onchangegreen 就会调用 store.dispatch 去派发给 reducer 修改数据
 // 可以是一个object，也可以传入函数
-let mapDispatchToProps = () => {
-  return {};
+let mapDispatchToProps = (dispatch) => {
+  return {
+    changeCheckedNav: (key) => {
+      dispatch(actions.changeCheckedNav(key));
+    },
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

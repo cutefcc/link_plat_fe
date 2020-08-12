@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn ./app.ts",
+    "dev": "tsnd --respawn ./app.ts",
     "client:dev": "webpack --mode development",
     "client:prod": "webpack --mode production",
     "lint": "eslint ./src/webapp"

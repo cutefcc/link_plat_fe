@@ -64,7 +64,8 @@ let initState = {
     },
   ],
   leftNavStatus: false, // true false
-  checkedNav: "alreadyEnv",
+  checkedNav: "", // checkedNav key
+  envLists: [],
 };
 const store = Redux.createStore(
   reducer,

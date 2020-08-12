@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import fetch from "cross-fetch";
 // import * as R from 'ramda'
+import * as actions from "store/actions";
 import RightConSubTitle from "commonComponents/RightConSubTitle";
 import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import autobind from "autobind-decorator";
@@ -81,6 +82,8 @@ class AlreadyEnv extends React.Component {
             envListsLoading: false,
             showEnvLists: envLists.slice((page - 1) * size, page * size),
           });
+          // 同时把 envLists 保存在redux中，因为用到的地方很多
+          this.props.setEnvLists(envLists);
         }
       });
   }
@@ -450,8 +453,12 @@ let mapStateToProps = (state) => {
     ...state,
   };
 };
-let mapDispatchToProps = () => {
-  return {};
+let mapDispatchToProps = (dispatch) => {
+  return {
+    setEnvLists: (envLists) => {
+      dispatch(actions.setEnvLists(envLists));
+    },
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AlreadyEnv);

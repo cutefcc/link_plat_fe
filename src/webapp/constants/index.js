@@ -10,6 +10,7 @@ let types = keyMirror({
   CHAGE_LEFTNAV: null,
   CHANGE_CHECKEDNAV: null,
   CHANGE_LEFTNAVSTATUS: null,
+  SET_ENVLISTS: null,
 });
 
 export default types;

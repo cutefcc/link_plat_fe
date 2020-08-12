@@ -11,17 +11,10 @@ const os = require("os");
 //开辟一个线程池
 const happyThreadPoll = HappyPack.ThreadPool({ size: os.cpus().length });
 const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 这个插件用来 remove/clean your build folder(s). 我们这里是 dist 目录
-// const FileManagerPlugin = require('filemanager-webpack-plugin'); // 这个插件可以用来 移动 copy 文件等操作
 
 let webpackConfig = {
   entry: "./src/webapp/app.js",
-  // 设置一个默认的出口目录
-  // output: {
-  //     path: path.join(__dirname, "dist/assets"),
-  //     publicPath: "./",
-  //     filename: "./scripts/[name].bundule.js"
-  // },
-  watch: !_modeflag, //监听文件变化
+  watch: !_modeflag,
   devServer: {
     hot: true,
   },
@@ -99,6 +92,8 @@ let webpackConfig = {
       Static: path.resolve(__dirname, "src/webapp/static"),
       components: path.resolve(__dirname, "src/webapp/components"),
       commonComponents: path.resolve(__dirname, "src/webapp/components/common"),
+      constants: path.resolve(__dirname, "src/webapp/constants"),
+      store: path.resolve(__dirname, "src/webapp/store"),
     },
   },
 };
