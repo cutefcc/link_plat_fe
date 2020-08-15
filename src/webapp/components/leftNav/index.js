@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import * as actions from "store/actions";
 import * as R from "ramda";
 import autobind from "autobind-decorator";
-// import { AlignLeftOutlined } from "@ant-design/icons";
 import { Menu, Button } from "antd";
 import {
   // AppstoreOutlined,

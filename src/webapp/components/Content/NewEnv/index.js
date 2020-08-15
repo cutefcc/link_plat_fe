@@ -12,6 +12,9 @@ class NewEnv extends React.Component {
   constructor(props) {
     super(props);
   }
+  componentDidMount() {
+    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
+  }
 
   renderBreadcrumb = () => <RightConBreadcrumb text="新建联调环境" />;
 

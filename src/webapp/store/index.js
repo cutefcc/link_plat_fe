@@ -66,6 +66,7 @@ let initState = {
   leftNavStatus: false, // true false
   checkedNav: "", // checkedNav key
   envLists: [],
+  checkLeftNavFn: null,
 };
 const store = Redux.createStore(
   reducer,

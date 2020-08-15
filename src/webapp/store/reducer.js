@@ -85,6 +85,15 @@ function envLists(state = {}, action) {
       return state;
   }
 }
+function checkLeftNavFn(state = {}, action) {
+  switch (action.type) {
+    case types.SAVE_LEFTNAVCHECKEDMETHOD:
+      return action.payload;
+
+    default:
+      return state;
+  }
+}
 
 // 在 redux 源码的 createStore 里面有一句    dispatch({ type: ActionTypes.INIT })
 // 用一个不匹配任何 reducer 的 action 去调了下dispatch，会默认走每一个 reducer 的default 分支
@@ -107,5 +116,6 @@ const reducer = combineReducers({
   checkedNav,
   leftNavStatus,
   envLists,
+  checkLeftNavFn,
 });
 export default reducer;

@@ -49,6 +49,7 @@ class AlreadyEnv extends React.Component {
     this.handleGetEnvsLists();
     // 获取已结束项目lists
     this.handleGetExpiredEnvsLists();
+    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
   }
 
   handleGetEnvsLists() {

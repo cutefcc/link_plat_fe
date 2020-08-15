@@ -28,6 +28,9 @@ class MockUve extends React.Component {
       optimization_objective: "",
     };
   }
+  componentDidMount() {
+    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
+  }
 
   handleShowMessage(type, info) {
     message.destroy();

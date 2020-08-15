@@ -31,3 +31,6 @@ export function setEnvLists(payload) {
 export function changeLeftNavStatus(status) {
   return { type: types.CHANGE_LEFTNAVSTATUS, payload: status };
 }
+export function saveLeftNavCheckedMethod(fn) {
+  return { type: types.SAVE_LEFTNAVCHECKEDMETHOD, payload: fn };
+}

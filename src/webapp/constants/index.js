@@ -11,6 +11,7 @@ let types = keyMirror({
   CHANGE_CHECKEDNAV: null,
   CHANGE_LEFTNAVSTATUS: null,
   SET_ENVLISTS: null,
+  SAVE_LEFTNAVCHECKEDMETHOD: null,
 });
 
 export default types;

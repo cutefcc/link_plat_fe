@@ -8,6 +8,7 @@ import RightConSubTitle from "commonComponents/RightConSubTitle";
 import SearchInput from "commonComponents/SearchInput";
 import * as actions from "store/actions";
 import { Input, Radio, DatePicker, Space } from "antd";
+const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 import "./index.less";
 const radioOptions = [
@@ -21,14 +22,31 @@ class SendReport extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      radioVal: "",
+      testResult: "yes", // 测试结果
+      testContent: "", // 测试内容
+      testProblem: "", // 测试遇到的问题
+      taskName: "", // 项目名称
     };
+  }
+
+  componentDidMount() {
+    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
   }
 
   handleRadioChange = (e) => {
     this.setState({
-      radioVal: e.target.value,
+      testResult: e.target.value,
     });
+  };
+
+  handleTestContentChange = (v) => {
+    this.setState({
+      testContent: v.target.value,
+    });
+  };
+
+  handleTestProblemChange = (v) => {
+    console.log(v);
   };
 
   renderBreadcrumb = () => <RightConBreadcrumb text="发送测试报告" />;
@@ -121,28 +139,39 @@ class SendReport extends React.Component {
           <Radio.Group
             options={radioOptions}
             onChange={this.handleRadioChange}
-            value={this.state.radioVal}
+            value={this.state.test}
           />
         </div>
 
         <div className="sendReportItem">
           <span className="inputText">测试内容</span>
-          <Input
-            placeholder="请填写测试内容"
-            // value={mid}
-            // onChange={this.handleMidChange}
-            className="sendReportItemSelect"
-          />
-          <span className="inputText">测试遇到的问题</span>
-          <Input
-            placeholder="请填写测试遇到的问题"
-            // value={mid}
-            // onChange={this.handleMidChange}
-            className="sendReportItemSelect"
-          />
+          <TextArea
+            style={{
+              width: "50%",
+              borderBottomLeftRadius: "5px",
+              height: "100px",
+            }}
+            allowClear
+            onChange={this.handleTestContentChange}
+            value={this.state.testContent}
+            className="textAreaDiv"
+          ></TextArea>
         </div>
 
-        <div className="sendReportItem"></div>
+        <div className="sendReportItem">
+          <span className="inputText">测试问题</span>
+          <TextArea
+            style={{
+              width: "50%",
+              borderBottomLeftRadius: "5px",
+              height: "100px",
+            }}
+            allowClear
+            onChange={this.handleTestProblemChange}
+            value={this.state.testProblem}
+            className="textAreaDiv"
+          ></TextArea>
+        </div>
       </div>
     </>
   );

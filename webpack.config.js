@@ -94,6 +94,7 @@ let webpackConfig = {
       commonComponents: path.resolve(__dirname, "src/webapp/components/common"),
       constants: path.resolve(__dirname, "src/webapp/constants"),
       store: path.resolve(__dirname, "src/webapp/store"),
+      utils: path.resolve(__dirname, "src/webapp/utils"),
     },
   },
 };

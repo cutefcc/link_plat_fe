@@ -6,13 +6,14 @@ const { Option } = Select;
 import "./index.less";
 
 function SearchInput(props) {
-  const { csName, envLists, placeholder = "" } = props;
-  const [value, setValue] = useState([]);
+  const { csName, envLists, placeholder = "", val = "" } = props;
+  const [value, setValue] = useState(val);
   const [data, setData] = useState([]); // 根据输入的部分数据 查找出来符合要求的数组
   const handleSearch = (value) => {
     const filterArr = envLists.filter((item) => item.envName.match(value));
     if (value) {
       setValue(value);
+      console.log("val", value);
       if (filterArr.length > 0) {
         setData(envLists.filter((item) => item.envName.match(value)));
       } else {
@@ -22,6 +23,7 @@ function SearchInput(props) {
   };
 
   const handleChange = (value) => {
+    console.log("val", value);
     setValue(value);
   };
 

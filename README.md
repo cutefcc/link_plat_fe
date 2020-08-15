@@ -36,3 +36,4 @@
 - vscode 编辑器不能跳转到组件对应的目录？
 - @json-editor/json-editor 只是安装了，还没有实践
 - redux envLists 的获取时机还存在问题（直接进入非主页和/alreadyEnv 页面会导致 redux envLists 为空）
+- 看一下 eslint react/display-name 规则

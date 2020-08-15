@@ -19,6 +19,9 @@ class SearchMid extends React.Component {
       searchValue: "",
     };
   }
+  componentDidMount() {
+    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
+  }
 
   handleSearch(value) {
     console.log("go search", value);

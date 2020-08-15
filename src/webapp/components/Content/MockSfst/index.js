@@ -20,6 +20,9 @@ class MockSfst extends React.Component {
       json: "",
     };
   }
+  componentDidMount() {
+    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
+  }
 
   handleShowMessage(type, info) {
     message.destroy();
