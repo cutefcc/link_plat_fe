@@ -153,15 +153,6 @@ class MockUve extends React.Component {
               placeholder="请填写项目名称"
               defaultVal={task_name}
             />
-            {/* <span className="inputText">项目名称</span>
-            <Select
-              defaultValue="main_feed"
-              onChange={this.handleServicesChange}
-              className="mockUveItemSelect"
-              value={service}
-            >
-              {this.renderServicesOptions()}
-            </Select> */}
             <span className="inputText">选择场景</span>
             <Select
               defaultValue="main_feed"
