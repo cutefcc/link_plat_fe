@@ -6,11 +6,12 @@ import fetch from "cross-fetch";
 import autobind from "autobind-decorator";
 import { Select, Input, Button, message } from "antd";
 const { Option } = Select;
-import { services, styles } from "../../../constants/mockUve";
+import { services, styles } from "constants/mockUve";
 import RightConSubTitle from "commonComponents/RightConSubTitle";
 import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import SearchInput from "commonComponents/SearchInput";
 import JsonShow from "commonComponents/JsonShow";
+import { getUrlParams } from "utils/index";
 import "./index.less";
 
 @withRouter
@@ -26,11 +27,19 @@ class MockUve extends React.Component {
       mid: "",
       promotion_objective: "",
       optimization_objective: "",
+      urlParams: {},
     };
   }
+
   componentDidMount() {
-    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
+    this.handleGetUrlParams();
   }
+
+  handleGetUrlParams = () => {
+    this.setState({
+      urlParams: getUrlParams(),
+    });
+  };
 
   handleShowMessage(type, info) {
     message.destroy();
@@ -132,6 +141,7 @@ class MockUve extends React.Component {
 
   renderAutoMock() {
     const { service, style, mid } = this.state;
+    const task_name = R.pathOr("", ["state", "urlParams", "task_name"], this);
     return (
       <>
         <RightConSubTitle text="自动生成mock数据" />
@@ -141,6 +151,7 @@ class MockUve extends React.Component {
             <SearchInput
               csName="mockUveItemSelect"
               placeholder="请填写项目名称"
+              defaultVal={task_name}
             />
             {/* <span className="inputText">项目名称</span>
             <Select

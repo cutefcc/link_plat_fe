@@ -12,9 +12,6 @@ class CountPage extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
-  }
 
   renderBreadcrumb = () => <RightConBreadcrumb text="统计🧮页面展示" />;
 

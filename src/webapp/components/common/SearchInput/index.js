@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Select } from "antd";
 
@@ -6,14 +6,25 @@ const { Option } = Select;
 import "./index.less";
 
 function SearchInput(props) {
-  const { csName, envLists, placeholder = "", val = "" } = props;
-  const [value, setValue] = useState(val);
+  const {
+    csName,
+    envLists,
+    placeholder = "",
+    defaultVal = "",
+    onValueChange = () => {},
+  } = props;
+  const [value, setValue] = useState(defaultVal);
   const [data, setData] = useState([]); // 根据输入的部分数据 查找出来符合要求的数组
+
+  useEffect(() => {
+    setValue(defaultVal);
+  }, [defaultVal]);
+
   const handleSearch = (value) => {
     const filterArr = envLists.filter((item) => item.envName.match(value));
     if (value) {
       setValue(value);
-      console.log("val", value);
+      onValueChange(value);
       if (filterArr.length > 0) {
         setData(envLists.filter((item) => item.envName.match(value)));
       } else {
@@ -23,8 +34,8 @@ function SearchInput(props) {
   };
 
   const handleChange = (value) => {
-    console.log("val", value);
     setValue(value);
+    onValueChange(value);
   };
 
   const handleGetOptions = () =>

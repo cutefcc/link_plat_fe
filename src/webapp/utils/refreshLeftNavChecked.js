@@ -6,8 +6,8 @@ import * as actions from "store/actions";
 const RefreshLeftNavChecked = forwardRef((props, ref) => {
   const { dispatch } = props;
   useImperativeHandle(ref, () => ({
-    handleLeftNavChecked() {
-      const pathName = window.location.pathname;
+    handleLeftNavChecked(path = "") {
+      const pathName = path || window.location.pathname;
       dispatch(
         actions.changeCheckedNav(
           pathName === "/"

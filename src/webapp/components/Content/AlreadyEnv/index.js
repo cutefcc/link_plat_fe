@@ -49,7 +49,6 @@ class AlreadyEnv extends React.Component {
     this.handleGetEnvsLists();
     // 获取已结束项目lists
     this.handleGetExpiredEnvsLists();
-    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
   }
 
   handleGetEnvsLists() {
@@ -230,6 +229,7 @@ class AlreadyEnv extends React.Component {
       page,
       search,
     } = this.state;
+    const { checkLeftNavFn, history } = this.props;
     return (
       <>
         <RightConSubTitle text="环境列表展示" />
@@ -300,7 +300,10 @@ class AlreadyEnv extends React.Component {
                             size="small"
                             style={{ borderRadius: "5px" }}
                             onClick={() => {
-                              this.props.history.push("/debugTool");
+                              history.push(
+                                `/debugTool?task_name=${item.envName}`
+                              );
+                              checkLeftNavFn && checkLeftNavFn("/debugTool");
                             }}
                           >
                             诊断
@@ -312,7 +315,10 @@ class AlreadyEnv extends React.Component {
                             size="small"
                             style={{ borderRadius: "5px" }}
                             onClick={() => {
-                              this.props.history.push("/sendReport");
+                              history.push(
+                                `/sendReport?task_name=${item.envName}`
+                              );
+                              checkLeftNavFn && checkLeftNavFn("/sendReport");
                             }}
                           >
                             发送报告
@@ -324,7 +330,10 @@ class AlreadyEnv extends React.Component {
                             size="small"
                             style={{ borderRadius: "5px" }}
                             onClick={() => {
-                              this.props.history.push("/searchMid");
+                              history.push(
+                                `/searchMid?task_name=${item.envName}`
+                              );
+                              checkLeftNavFn && checkLeftNavFn("/searchMid");
                             }}
                           >
                             mid查询
@@ -338,7 +347,10 @@ class AlreadyEnv extends React.Component {
                             size="small"
                             style={{ borderRadius: "5px" }}
                             onClick={() => {
-                              this.props.history.push("/mockUve");
+                              history.push(
+                                `/mockUve?task_name=${item.envName}`
+                              );
+                              checkLeftNavFn && checkLeftNavFn("/mockUve");
                             }}
                           >
                             mock UVE
@@ -350,7 +362,10 @@ class AlreadyEnv extends React.Component {
                             size="small"
                             style={{ borderRadius: "5px" }}
                             onClick={() => {
-                              this.props.history.push("/mockSfst");
+                              history.push(
+                                `/mockSfst?task_name=${item.envName}`
+                              );
+                              checkLeftNavFn && checkLeftNavFn("/mockSfst");
                             }}
                           >
                             mock SFST

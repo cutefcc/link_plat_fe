@@ -13,10 +13,6 @@ class SmartBuild extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
-  }
-
   renderBreadcrumb = () => <RightConBreadcrumb text="智能搭建环境" />;
 
   render() {

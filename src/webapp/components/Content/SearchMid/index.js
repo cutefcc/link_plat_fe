@@ -1,11 +1,12 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import * as R from 'ramda'
+import * as R from "ramda";
 import { Input } from "antd";
 import RightConSubTitle from "commonComponents/RightConSubTitle";
 import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import SearchInput from "commonComponents/SearchInput";
+import { getUrlParams } from "utils/index";
 import autobind from "autobind-decorator";
 const { Search } = Input;
 import "./index.less";
@@ -17,11 +18,19 @@ class SearchMid extends React.Component {
     super(props);
     this.state = {
       searchValue: "",
+      urlParams: {},
     };
   }
+
   componentDidMount() {
-    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
+    this.handleGetUrlParams();
   }
+
+  handleGetUrlParams = () => {
+    this.setState({
+      urlParams: getUrlParams(),
+    });
+  };
 
   handleSearch(value) {
     console.log("go search", value);
@@ -30,6 +39,7 @@ class SearchMid extends React.Component {
   renderBreadcrumb = () => <RightConBreadcrumb text="查询mid页" />;
 
   renderInputArea() {
+    const task_name = R.pathOr("", ["state", "urlParams", "task_name"], this);
     return (
       <>
         <RightConSubTitle text="按mid搜索" />
@@ -39,6 +49,7 @@ class SearchMid extends React.Component {
             <SearchInput
               csName="searchMidSelect"
               placeholder="请填写项目名称"
+              defaultVal={task_name}
             />
             <Search
               placeholder="输入mid"

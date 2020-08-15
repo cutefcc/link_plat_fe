@@ -1,13 +1,14 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import * as R from 'ramda'
+import * as R from "ramda";
 import { message } from "antd";
 import autobind from "autobind-decorator";
 import RightConSubTitle from "commonComponents/RightConSubTitle";
 import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import SearchInput from "commonComponents/SearchInput";
 import JsonShow from "commonComponents/JsonShow";
+import { getUrlParams } from "utils/index";
 import "./index.less";
 
 @withRouter
@@ -18,11 +19,19 @@ class MockSfst extends React.Component {
     this.state = {
       jsonStr: "", // TextArea 内容
       json: "",
+      urlParams: {},
     };
   }
+
   componentDidMount() {
-    this.props.checkLeftNavFn && this.props.checkLeftNavFn();
+    this.handleGetUrlParams();
   }
+
+  handleGetUrlParams = () => {
+    this.setState({
+      urlParams: getUrlParams(),
+    });
+  };
 
   handleShowMessage(type, info) {
     message.destroy();
@@ -58,6 +67,7 @@ class MockSfst extends React.Component {
   renderBreadcrumb = () => <RightConBreadcrumb text="查询MockSfst返回数据" />;
 
   renderInputArea() {
+    const task_name = R.pathOr("", ["state", "urlParams", "task_name"], this);
     return (
       <>
         <RightConSubTitle text="表单区域" />
@@ -67,6 +77,7 @@ class MockSfst extends React.Component {
             <SearchInput
               csName="mockSfstItemSelect"
               placeholder="请填写项目名称"
+              defaultVal={task_name}
             />
           </div>
         </div>

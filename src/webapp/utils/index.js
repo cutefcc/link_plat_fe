@@ -1,3 +1,5 @@
+import * as R from "ramda";
+import urlParse from "url";
 export const debounce = (fn, tm) => {
   let timer = null;
   return (...argu) => {
@@ -20,4 +22,7 @@ export const closure = (fn, tm) => {
       fn.call(this, ...argu);
     }, tm);
   };
+};
+export const getUrlParams = () => {
+  return R.pathOr({}, ["query"], urlParse.parse(window.location.href, true));
 };
