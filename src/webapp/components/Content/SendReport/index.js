@@ -7,8 +7,19 @@ import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
 import RightConSubTitle from "commonComponents/RightConSubTitle";
 import SearchInput from "commonComponents/SearchInput";
 import * as actions from "store/actions";
-import { getUrlParams } from "utils/index";
-import { Input, Radio, DatePicker, Space } from "antd";
+import { getUrlParams, get10BitRandomStr } from "utils/index";
+import { moduleConfig } from "constants/index";
+import {
+  Input,
+  Radio,
+  DatePicker,
+  Space,
+  Table,
+  Select,
+  message,
+  Button,
+} from "antd";
+const { Option } = Select;
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 import "./index.less";
@@ -16,6 +27,15 @@ const radioOptions = [
   { label: "通过", value: "yes" },
   { label: "不通过", value: "no" },
 ];
+const renderModuleOptions = () => {
+  return moduleConfig.map((item) => {
+    return <Option key={item.value}>{item.label}</Option>;
+  });
+};
+const initDataItem = {
+  module: "uve",
+  bugLink: "",
+};
 
 @withRouter
 @autobind
@@ -28,12 +48,100 @@ class SendReport extends React.Component {
       testContent: "", // 测试内容
       testProblem: "", // 测试遇到的问题
       taskName: "", // 项目名称
+
+      columns: [
+        {
+          title: "模块",
+          dataIndex: "module",
+          key: "module",
+          render: (text) => (
+            <Select
+              defaultValue="uve"
+              onChange={() => {}}
+              className="sendReportItemSelect"
+              value={text}
+            >
+              {renderModuleOptions()}
+            </Select>
+          ),
+        },
+        {
+          title: "Bug链接",
+          key: "bugLink",
+          dataIndex: "bugLink",
+          render: () => (
+            <>
+              <Input
+                placeholder="请填写Bug链接"
+                // value={mid}
+                // onChange={this.handleMidChange}
+                className="sendReportItemSelect bugLinkInput"
+              />
+            </>
+          ),
+        },
+        {
+          title: "操作",
+          key: "actionKey",
+          render: (actionKey) => {
+            return (
+              <Space size="middle">
+                <a
+                  onClick={() => {
+                    this.handleAddBug(actionKey);
+                  }}
+                >
+                  添加
+                </a>
+                <a
+                  onClick={() => {
+                    this.handleDeleteBug(actionKey);
+                  }}
+                >
+                  删除
+                </a>
+              </Space>
+            );
+          },
+        },
+      ],
+      tableData: [
+        {
+          key: get10BitRandomStr(10),
+          ...initDataItem,
+        },
+      ],
     };
   }
 
   componentDidMount() {
     this.handleGetUrlParams();
   }
+
+  handleAddBug = (item) => {
+    this.bottomDiv.scrollIntoView();
+    const { tableData } = this.state;
+    tableData.splice(tableData.indexOf(item), 0, {
+      key: get10BitRandomStr(10),
+      ...initDataItem,
+    });
+    this.setState({
+      tableData: [...tableData],
+    });
+  };
+
+  handleDeleteBug = (item) => {
+    const { tableData } = this.state;
+    if (tableData.length === 1) {
+      message.destroy();
+      message.info("不能删除最后一项");
+      return;
+    }
+    tableData.splice(tableData.indexOf(item), 1);
+    this.setState({
+      tableData: [...tableData],
+    });
+  };
 
   handleGetUrlParams = () => {
     const urlObj = getUrlParams();
@@ -69,12 +177,14 @@ class SendReport extends React.Component {
 
   renderForm = () => {
     const task_name = R.pathOr("", ["state", "urlParams", "task_name"], this);
+    const columns = R.pathOr([], ["state", "columns"], this);
+    const tableData = R.pathOr([], ["state", "tableData"], this);
     return (
       <>
         <RightConSubTitle text="填写测试报告" />
         <div className="inputArea">
           <div className="sendReportItem">
-            <span className="inputText">项目名称 * </span>
+            <span className="inputText">项目名称</span>
             <SearchInput
               csName="sendReportItemSelect"
               placeholder="请填写项目名称"
@@ -114,11 +224,7 @@ class SendReport extends React.Component {
             />
             <span className="inputText">测试时间</span>
             <Space direction="vertical" size={12}>
-              <RangePicker />
-              {/* <RangePicker showTime />
-          <RangePicker picker="week" />
-          <RangePicker picker="month" />
-          <RangePicker picker="year" /> */}
+              <RangePicker placeholder={["开始日期", "结束日期"]} />
             </Space>
           </div>
 
@@ -130,14 +236,14 @@ class SendReport extends React.Component {
               // onChange={this.handleMidChange}
               className="sendReportItemSelect"
             />
-            <span className="inputText">收件人</span>
+            <span className="inputText">收件人员</span>
             <Input
               placeholder="逗号分割"
               // value={mid}
               // onChange={this.handleMidChange}
               className="sendReportItemSelect"
             />
-            <span className="inputText">抄送</span>
+            <span className="inputText">抄送人员</span>
             <Input
               placeholder="逗号分割"
               // value={mid}
@@ -151,7 +257,7 @@ class SendReport extends React.Component {
             <Radio.Group
               options={radioOptions}
               onChange={this.handleRadioChange}
-              value={this.state.test}
+              value={this.state.testResult}
             />
           </div>
 
@@ -159,9 +265,9 @@ class SendReport extends React.Component {
             <span className="inputText">测试内容</span>
             <TextArea
               style={{
-                width: "50%",
+                width: "90%",
                 borderBottomLeftRadius: "5px",
-                height: "100px",
+                height: "80px",
               }}
               allowClear
               onChange={this.handleTestContentChange}
@@ -174,9 +280,9 @@ class SendReport extends React.Component {
             <span className="inputText">测试问题</span>
             <TextArea
               style={{
-                width: "50%",
+                width: "90%",
                 borderBottomLeftRadius: "5px",
-                height: "100px",
+                height: "80px",
               }}
               allowClear
               onChange={this.handleTestProblemChange}
@@ -184,6 +290,25 @@ class SendReport extends React.Component {
               className="textAreaDiv"
             ></TextArea>
           </div>
+          <Table
+            style={{ margin: "20px" }}
+            columns={columns}
+            dataSource={tableData}
+            size="small"
+            pagination={false}
+          />
+          <Button
+            type="primary"
+            size="middle"
+            style={{ borderRadius: "5px", marginLeft: "20px" }}
+            onClick={() => {}}
+          >
+            发送报告
+          </Button>
+          <div
+            ref={(dom) => (this.bottomDiv = dom)}
+            style={{ height: "0px", overflow: "hidden" }}
+          ></div>
         </div>
       </>
     );

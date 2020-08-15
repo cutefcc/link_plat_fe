@@ -1,4 +1,4 @@
-import types from "../constants/index.js";
+import { types } from "constants/index";
 import { combineReducers } from "redux";
 
 // reducer 拆分（每个 reducer 只负责管理全局 state 中它负责的一部分）

@@ -14,4 +14,12 @@ let types = keyMirror({
   SAVE_LEFTNAVCHECKEDMETHOD: null,
 });
 
-export default types;
+const moduleConfig = [
+  { label: "uve", value: "uve" },
+  { label: "idx", value: "idx" },
+  { label: "wax", value: "wax" },
+  { label: "render", value: "render" },
+  { label: "topfans", value: "topfans" },
+  { label: "nofans", value: "nofans" },
+];
+export { moduleConfig, types };

@@ -1,4 +1,4 @@
-import types from "../constants/index.js";
+import { types } from "constants/index";
 import fetch from "cross-fetch";
 
 export function changeName() {
