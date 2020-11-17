@@ -7,7 +7,7 @@ import prettyHtml from "json-pretty-html";
 import "./index.less";
 
 function JsonShow(props) {
-  const { jsonStr = "", json, onJsonChange, title = "" } = props;
+  const { jsonStr = "", json, onJsonChange, title = "", onSubmit } = props;
   return (
     <>
       <RightConSubTitle text={title} />
@@ -30,6 +30,7 @@ function JsonShow(props) {
         <Button
           type="primary"
           style={{ borderRadius: "5px", marginLeft: "20px" }}
+          onClick={onSubmit}
         >
           提交
         </Button>

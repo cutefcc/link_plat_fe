@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import * as R from "ramda";
 import fetch from "cross-fetch";
 import autobind from "autobind-decorator";
-import { Select, Input, Button, message } from "antd";
+import { Select, Input, Button, message, InputNumber } from "antd";
 const { Option } = Select;
 import { services, styles } from "constants/mockUve";
 import RightConSubTitle from "commonComponents/RightConSubTitle";
 import RightConBreadcrumb from "commonComponents/RightConBreadcrumb";
-import SearchInput from "commonComponents/SearchInput";
+// import SearchInput from "commonComponents/SearchInput";
 import JsonShow from "commonComponents/JsonShow";
 import { getUrlParams } from "utils/index";
 import "./index.less";
@@ -24,6 +24,7 @@ class MockUve extends React.Component {
       json: "",
       service: "main_feed",
       style: "see_download",
+      port: "",
       mid: "",
       promotion_objective: "",
       optimization_objective: "",
@@ -98,6 +99,34 @@ class MockUve extends React.Component {
     });
   }
 
+  handleSubmit() {
+    const { port, json } = this.state;
+    if (!port) {
+      this.handleShowMessage("error", "port 必填");
+      return;
+    }
+    fetch("/api/uploadMock", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uveport: port,
+        mockdata: json,
+      }),
+    })
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((res) => {
+        if (res.data === "succeed") {
+          this.handleShowMessage("success", "提交成功");
+        } else {
+          this.handleShowMessage("error", "提交失败");
+        }
+      });
+  }
+
   handleAutoGenerate() {
     const data = {
       service: R.pathOr("", ["state", "service"], this),
@@ -125,6 +154,21 @@ class MockUve extends React.Component {
       });
   }
 
+  handlePortChange(num) {
+    if (Object.prototype.toString.call(num) === "[object Number]") {
+      this.setState({
+        port: num,
+      });
+    }
+  }
+
+  handlePortBlur() {
+    const { port } = this.state;
+    if (!port) {
+      this.handleShowMessage("error", "port 必填");
+    }
+  }
+
   renderServicesOptions() {
     return services.map((item) => {
       return <Option key={item.value}>{item.text}</Option>;
@@ -140,19 +184,40 @@ class MockUve extends React.Component {
   renderBreadcrumb = () => <RightConBreadcrumb text="mockUVE返回数据" />;
 
   renderAutoMock() {
-    const { service, style, mid } = this.state;
-    const task_name = R.pathOr("", ["state", "urlParams", "task_name"], this);
+    const { service, style, mid, port } = this.state;
+    // const task_name = R.pathOr("", ["state", "urlParams", "task_name"], this);
     return (
       <>
         <RightConSubTitle text="自动生成mock数据" />
+
         <div className="inputArea">
           <div className="mockUveItem">
+            <span className="inputText">环境端口</span>
+            <InputNumber
+              autoFocus={true}
+              placeholder=""
+              min={3000}
+              max={9999}
+              value={port}
+              onChange={this.handlePortChange}
+              onBlur={this.handlePortBlur}
+              className="mockUveItemSelect"
+            />
             <span className="inputText">项目名称</span>
-            <SearchInput
-              csName="mockUveItemSelect"
+            {/* <SearchInput
+              className="mockUveItemSelect"
               placeholder="请填写项目名称"
               defaultVal={task_name}
+            /> */}
+            <Input
+              placeholder=""
+              // value={mid}
+              // onChange={this.handleMidChange}
+              className="mockUveItemSelect"
             />
+          </div>
+
+          <div className="mockUveItem">
             <span className="inputText">选择场景</span>
             <Select
               defaultValue="main_feed"
@@ -217,6 +282,7 @@ class MockUve extends React.Component {
         jsonStr={jsonStr}
         json={json}
         onJsonChange={this.handleJsonChange}
+        onSubmit={this.handleSubmit}
         title="手动生成mock数据"
       />
     );

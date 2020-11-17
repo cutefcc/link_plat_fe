@@ -11,6 +11,9 @@ import {
 } from "../ioc";
 import { host, port } from "../constant/config";
 import * as queryString from "query-string";
+// import fetch from 'cross-fetch';
+import fetch from "node-fetch";
+import FormData = require("../node_modules/form-data");
 const urlPrefix = `${host}:${port}/`;
 
 @provideThrowable(TYPE.Controller, "ApiController")
@@ -95,30 +98,55 @@ export default class ApiController implements interfaces.Controller {
     }
     ctx.body = res;
   }
-  //   @httpPost("/uploadMock")
-  //   private async uploadMock(
-  //     ctx: Router.IRouterContext,
-  //     next: () => Promise<any>
-  //   ): Promise<any> {
-  //     let query = ctx.request.body;
-  //     Object.keys(query).forEach(item => {
-  //         if (query[item] === '') {
-  //             delete query[item]
-  //         }
-  //     })
-  //     const url = `${urlPrefix}upload_mock?${queryString.stringify(query)}`;
-  //     let res = {
+  @httpPost("/posttest")
+  private async posttest(
+    ctx: Router.IRouterContext,
+    next: () => Promise<any>
+  ): Promise<any> {
+    let query = ctx.request.body;
+    console.log("posttest", query);
+    // ctx.body = { code: 999 };
+    ctx.body = "sucess";
+  }
+  @httpPost("/uploadMock")
+  private async uploadMock(
+    ctx: Router.IRouterContext,
+    next: () => Promise<any>
+  ): Promise<any> {
+    let query = ctx.request.body;
+    let res = { code: 0 };
+    const { uveport, mockdata } = query;
+    // const params: object = {
+    //   uveport,
+    //   mockdata: mockdata,
+    // };
+    const url: string = `${urlPrefix}upload_mock`;
+    // const url: string = `http://localhost:3001/api/posttest`;
+    // const opts: object = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",//"multipart/form-data"//"application/json",
+    //   },
+    //   body: JSON.stringify(params),
+    // };
+    var form = new FormData();
+    form.append("uveport", uveport);
+    form.append("mockdata", JSON.stringify(mockdata));
 
-  //     }
-  //     try {
-  //         const result: Promise<any> = await this.apiService.getInfo(url);
-  //         res = result;
-  //     } catch {
-  //         res = {
-  //             code: 0,
-  //             message: "接口返回错误"
-  //         };
-  //     }
-  //     ctx.body = res;
-  //   }
+    await fetch(url, { method: "POST", body: form })
+      .then((res) => res.text())
+      .then((body) => {
+        if (body === "succeed") {
+          ctx.body = {
+            code: 0,
+            data: body,
+          };
+        } else {
+          ctx.body = res;
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
 }
