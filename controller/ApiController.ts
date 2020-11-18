@@ -13,7 +13,8 @@ import { host, port } from "../constant/config";
 import * as queryString from "query-string";
 // import fetch from 'cross-fetch';
 import fetch from "node-fetch";
-import FormData = require("../node_modules/form-data");
+// import FormData = require("../node_modules/form-data");
+const FormData = require("form-data");
 const urlPrefix = `${host}:${port}/`;
 
 @provideThrowable(TYPE.Controller, "ApiController")
