@@ -23,7 +23,7 @@
     "antd": "^4.5.2",
     "autobind-decorator": "^2.4.0",
     "cross-env": "^5.2.1",
-    "cross-fetch": "^3.0.4",
+    "cross-fetch": "^3.1.5",
     "form-data": "^3.0.0",
     "json-pretty-html": "^1.1.6",
     "key-mirror": "^1.0.1",
